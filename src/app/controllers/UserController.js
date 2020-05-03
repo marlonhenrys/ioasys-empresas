@@ -1,4 +1,4 @@
-const User = require('../models/User')
+const userService = require('../services/UserService')
 
 module.exports = {
 
@@ -8,6 +8,14 @@ module.exports = {
 
     create: async (req, res) => {
 
+        const data = await userService.create(req.body)
+
+        if (data.success)
+            return res.status(201).json(data.user)
+
+        return res.status(422).json({
+            errors: data.errors
+        })
     },
 
     show: async (req, res) => {

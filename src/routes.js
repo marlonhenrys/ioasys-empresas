@@ -3,8 +3,6 @@ const UserController = require('./app/controllers/UserController')
 
 const routes = Router()
 
-routes.get('/', (req, res) => {
-    return res.json({ message: 'ioasys empresas' })
-})
+routes.post('/users', UserController.create)
 
 module.exports = routes

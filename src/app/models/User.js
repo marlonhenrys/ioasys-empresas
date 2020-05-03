@@ -7,7 +7,7 @@ class User extends Model {
             phone: DataTypes.STRING,
             email: DataTypes.STRING,
             password: DataTypes.STRING,
-            type: DataTypes.ENUM
+            type: DataTypes.ENUM('Administrator', 'Manager', 'Employee')
         }, {
             sequelize
         })

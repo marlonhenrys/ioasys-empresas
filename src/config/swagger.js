@@ -10,8 +10,8 @@ module.exports = {
     basePath: '/',
     tags: [
         {
-            name: 'Users',
-            description: 'API for users in the system'
+            name: 'User',
+            description: 'Operations about user'
         }
     ],
     schemes: [
@@ -27,14 +27,14 @@ module.exports = {
         '/users': {
             post: {
                 tags: [
-                    'Users'
+                    'User'
                 ],
-                summary: 'Create new user in system',
+                summary: 'Create a new user',
                 parameters: [
                     {
                         name: 'user',
                         in: 'body',
-                        description: 'User that we want to create',
+                        description: 'User object that needs to create',
                         schema: {
                             '$ref': '#/definitions/User'
                         }
@@ -44,28 +44,17 @@ module.exports = {
                     'application/json'
                 ],
                 responses: {
-                    200: {
-                        description: 'New user is created',
+                    201: {
+                        description: 'User created',
                         schema: {
                             '$ref': '#/definitions/User'
                         }
+                    },
+                    422: {
+                        description: 'Unprocessable Entity'
                     }
                 }
             },
-            get: {
-                tags: [
-                    'Users'
-                ],
-                summary: 'Get all users in system',
-                responses: {
-                    200: {
-                        description: 'OK',
-                        schema: {
-                            '$ref': '#/definitions/Users'
-                        }
-                    }
-                }
-            }
         }
     },
     securityDefinitions: {
@@ -78,32 +67,44 @@ module.exports = {
     definitions: {
         User: {
             required: [
-                'email',
-                'name'
+                'name',
+                'phone',
+                'password',
+                'type',
+                'email'
             ],
             properties: {
                 id: {
-                    type: 'string',
-                    uniqueItems: true
-                },
-                email: {
-                    type: 'string',
+                    type: 'integer',
                     uniqueItems: true
                 },
                 name: {
                     type: 'string'
                 },
-                created_at: {
+                email: {
                     type: 'string',
-                    format: 'date',
-                    default: 'now'
+                    uniqueItems: true
+                },
+                phone: {
+                    type: 'string'
+                },
+                password: {
+                    type: 'string'
+                },
+                type: {
+                    type: 'string'
+                },
+                enterprise_id: {
+                    type: 'integer'
+                },
+                createdAt: {
+                    type: 'string'
+                },
+                updatedAt: {
+                    type: 'string'
                 }
             }
         },
-        Users: {
-            type: 'array',
-            $ref: '#/definitions/User'
-        }
     }
 }
 
