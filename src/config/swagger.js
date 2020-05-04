@@ -11,7 +11,11 @@ module.exports = {
     tags: [
         {
             name: 'User',
-            description: 'Operations about user'
+            description: 'CRUD'
+        },
+        {
+            name: 'Authentication',
+            description: 'Login'
         }
     ],
     schemes: [
@@ -36,25 +40,145 @@ module.exports = {
                         in: 'body',
                         description: 'User object that needs to create',
                         schema: {
-                            '$ref': '#/definitions/User'
+                            type: 'object',
+                            properties: {
+                                name: {
+                                    type: 'string'
+                                },
+                                email: {
+                                    type: 'string'
+                                },
+                                phone: {
+                                    type: 'string'
+                                },
+                                password: {
+                                    type: 'string'
+                                },
+                                type: {
+                                    type: 'string'
+                                },
+                                enterprise_id: {
+                                    type: 'integer'
+                                }
+                            },
+                            required: [
+                                'name',
+                                'phone',
+                                'email',
+                                'password',
+                                'type'
+                            ]
                         }
                     }
-                ],
-                produces: [
-                    'application/json'
                 ],
                 responses: {
                     201: {
                         description: 'User created',
                         schema: {
-                            '$ref': '#/definitions/User'
+                            type: 'object',
+                            properties: {
+                                id: {
+                                    type: 'integer'
+                                },
+                                name: {
+                                    type: 'string'
+                                },
+                                email: {
+                                    type: 'string'
+                                },
+                                phone: {
+                                    type: 'string'
+                                },
+                                type: {
+                                    type: 'string'
+                                },
+                                enterprise_id: {
+                                    type: 'integer'
+                                },
+                                createdAt: {
+                                    type: 'string'
+                                },
+                                updatedAt: {
+                                    type: 'string'
+                                }
+                            }
                         }
                     },
                     422: {
                         description: 'Unprocessable Entity'
                     }
                 }
-            },
+            }
+        },
+        '/auth': {
+            post: {
+                tags: [
+                    'Authentication'
+                ],
+                summary: 'Authenticate a user',
+                parameters: [
+                    {
+                        name: 'credentials',
+                        in: 'body',
+                        description: 'Access credentials',
+                        schema: {
+                            type: 'object',
+                            properties: {
+                                email: {
+                                    type: 'string'
+                                },
+                                password: {
+                                    type: 'string'
+                                }
+                            },
+                            required: [
+                                'email',
+                                'password'
+                            ]
+                        }
+                    }
+                ],
+                responses: {
+                    200: {
+                        description: 'Authenticated user',
+                        schema: {
+                            type: 'object',
+                            properties: {
+                                id: {
+                                    type: 'integer'
+                                },
+                                name: {
+                                    type: 'string'
+                                },
+                                email: {
+                                    type: 'string'
+                                },
+                                phone: {
+                                    type: 'string'
+                                },
+                                type: {
+                                    type: 'string'
+                                },
+                                enterprise_id: {
+                                    type: 'integer'
+                                },
+                                createdAt: {
+                                    type: 'string'
+                                },
+                                updatedAt: {
+                                    type: 'string'
+                                },
+                                token: {
+                                    type: 'string'
+                                }
+                            }
+                        }
+                    },
+                    401: {
+                        description: 'Unauthorized'
+                    }
+                }
+            }
         }
     },
     securityDefinitions: {
@@ -63,48 +187,6 @@ module.exports = {
             name: 'Authorization',
             in: 'header'
         }
-    },
-    definitions: {
-        User: {
-            required: [
-                'name',
-                'phone',
-                'password',
-                'type',
-                'email'
-            ],
-            properties: {
-                id: {
-                    type: 'integer',
-                    uniqueItems: true
-                },
-                name: {
-                    type: 'string'
-                },
-                email: {
-                    type: 'string',
-                    uniqueItems: true
-                },
-                phone: {
-                    type: 'string'
-                },
-                password: {
-                    type: 'string'
-                },
-                type: {
-                    type: 'string'
-                },
-                enterprise_id: {
-                    type: 'integer'
-                },
-                createdAt: {
-                    type: 'string'
-                },
-                updatedAt: {
-                    type: 'string'
-                }
-            }
-        },
     }
 }
 

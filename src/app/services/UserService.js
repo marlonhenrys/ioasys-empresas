@@ -42,6 +42,8 @@ module.exports = {
             enterprise_id
         })
 
+        user.password = undefined
+
         return { success: true, user }
 
     }).catch(errors => ({ success: false, errors }))

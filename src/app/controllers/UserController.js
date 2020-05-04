@@ -13,9 +13,7 @@ module.exports = {
         if (data.success)
             return res.status(201).json(data.user)
 
-        return res.status(422).json({
-            errors: data.errors
-        })
+        return res.status(422).json(data.errors)
     },
 
     show: async (req, res) => {
