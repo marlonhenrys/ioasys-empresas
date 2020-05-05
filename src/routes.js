@@ -5,6 +5,6 @@ const AuthController = require('./app/controllers/AuthController')
 const routes = Router()
 
 routes.post('/users', UserController.create)
-routes.post('/auth', AuthController.authenticate)
+routes.post('/auth/login', AuthController.login)
 
 module.exports = routes

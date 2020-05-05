@@ -1,16 +1,28 @@
-const authService = require('../services/AuthService')
+const authService = require('../services/auth/login')
+const validator = require('indicative/validator')
+const { user: errorMessages } = require('../utils/errorMessages')
 
 module.exports = {
 
-    authenticate: async (req, res) => {
+    login: async (req, res) => {
 
-        const { email, password } = req.body
+        try {
 
-        const data = await authService.authenticate(email, password)
+            await validator.validate(req.body, {
+                email: 'required|email',
+                password: 'required|string|min:6'
+            }, errorMessages)
 
-        if (data.success)
-            return res.status(200).json(data.user)
+            const user = await authService.login(req.body)
 
-        return res.status(401).json(data.error)
+            return res.status(200).json(user)
+
+        } catch (error) {
+            console.error(error)
+
+            return res.status(error.status || 500).json({
+                message: error.message
+            })
+        }
     }
 }

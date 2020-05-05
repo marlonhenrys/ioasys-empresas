@@ -2,8 +2,8 @@ const User = require('../models/User');
 
 module.exports = {
 
-    create: async user => await User.create(user),
+    create: user => User.create(user),
 
-    findByEmail: async email => await User.findOne({ where: { email } })
+    findByEmail: email => User.findOne({ where: { email } })
 
 };

@@ -1,4 +1,6 @@
-const userService = require('../services/UserService')
+const userService = require('../services/user/create')
+const validator = require('indicative/validator')
+const { user: errorMessages } = require('../utils/errorMessages')
 
 module.exports = {
 
@@ -8,12 +10,28 @@ module.exports = {
 
     create: async (req, res) => {
 
-        const data = await userService.create(req.body)
+        try {
 
-        if (data.success)
-            return res.status(201).json(data.user)
+            await validator.validate(req.body, {
+                name: 'required|string|min:3',
+                phone: 'required|string|numeric|min:10|max:11',
+                password: 'required|string|min:6',
+                type: 'required|string|in:Administrator,Manager,Employee',
+                enterprise_id: 'required_when:type,Employee|integer|above:0',
+                email: 'required|email|unique:User'
+            }, errorMessages)
 
-        return res.status(422).json(data.errors)
+            const user = await userService.create(req.body)
+
+            return res.status(201).json(user)
+
+        } catch (error) {
+            console.error(error)
+
+            return res.status(error.status || 500).json({
+                message: error.message
+            })
+        }
     },
 
     show: async (req, res) => {

@@ -1,47 +1,59 @@
-const { extend } = require('indicative/validator')
+const validator = require('indicative/validator')
+const ApplicationError = require('../app/utils/errorHandler')
 
-module.exports = [
+class MyCustomFormatter {
+    addError(error, field, rule, args) {
+        throw new ApplicationError(error, rule == 'required' ? 400 : 422)
+    }
 
-    extend('unique', {
-        async: true,
+    toJSON() {
 
-        compile(args) {
-            if (args.length !== 1)
-                throw new Error('Unique rule needs the model name')
+    }
+}
 
-            return args
-        },
+validator.configure({
+    formatter: MyCustomFormatter
+})
 
-        async validate(data, field, args) {
-            const fieldValue = data.original[field]
-            const [modelName] = args
+validator.extend('unique', {
+    async: true,
 
-            if (modelName) {
-                const Model = require(`../app/models/${modelName}`)
-                const row = await Model.findOne({
-                    where: {
-                        [field]: fieldValue
-                    }
-                })
-                if (!row) return true
-            }
+    compile(args) {
+        if (args.length !== 1)
+            throw new Error('Unique rule needs the model name')
 
-            return false
+        return args
+    },
+
+    async validate(data, field, args) {
+        const fieldValue = data.original[field]
+        const [modelName] = args
+
+        if (modelName) {
+            const Model = require(`../app/models/${modelName}`)
+            const row = await Model.findOne({
+                where: {
+                    [field]: fieldValue
+                }
+            })
+            if (!row) return true
         }
-    }),
 
-    extend('numeric', {
-        async: true,
+        return false
+    }
+})
 
-        compile(args) {
-            return args
-        },
+validator.extend('numeric', {
+    async: true,
 
-        async validate(data, field) {
-            const fieldValue = data.original[field]
-            const reg = new RegExp('^\\d+$');
+    compile(args) {
+        return args
+    },
 
-            return reg.test(fieldValue)
-        }
-    })
-]
+    async validate(data, field) {
+        const fieldValue = data.original[field]
+        const reg = new RegExp('^\\d+$');
+
+        return reg.test(fieldValue)
+    }
+})

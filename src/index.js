@@ -4,6 +4,7 @@ const swaggerUi = require('swagger-ui-express')
 const swaggerConfig = require('./config/swagger')
 
 require('./database')
+require('./config/indicative')
 
 const app = express()
 
