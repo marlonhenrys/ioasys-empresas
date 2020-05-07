@@ -72,37 +72,11 @@ module.exports = {
                     }
                 ],
                 responses: {
-                    201: {
+                    204: {
                         description: 'User created',
-                        schema: {
-                            type: 'object',
-                            properties: {
-                                id: {
-                                    type: 'integer'
-                                },
-                                name: {
-                                    type: 'string'
-                                },
-                                email: {
-                                    type: 'string'
-                                },
-                                phone: {
-                                    type: 'string'
-                                },
-                                type: {
-                                    type: 'string'
-                                },
-                                enterprise_id: {
-                                    type: 'integer'
-                                },
-                                createdAt: {
-                                    type: 'string'
-                                },
-                                updatedAt: {
-                                    type: 'string'
-                                }
-                            }
-                        }
+                    },
+                    400: {
+                        description: 'Bad Request'
                     },
                     422: {
                         description: 'Unprocessable Entity'
@@ -110,7 +84,7 @@ module.exports = {
                 }
             }
         },
-        '/auth': {
+        '/auth/login': {
             post: {
                 tags: [
                     'Authentication'

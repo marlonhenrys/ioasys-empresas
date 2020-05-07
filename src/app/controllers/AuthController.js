@@ -13,7 +13,9 @@ module.exports = {
                 password: 'required|string|min:6'
             }, errorMessages)
 
-            const user = await authService.login(req.body)
+            const { email, password } = req.body
+
+            const user = await authService.login(email, password)
 
             return res.status(200).json(user)
 

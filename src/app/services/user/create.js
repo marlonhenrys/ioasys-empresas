@@ -3,23 +3,16 @@ const bcrypt = require('bcrypt')
 
 module.exports = {
 
-    create: async ({ name, phone, email, password, type, enterprise_id }) => {
+    create: async user => {
 
         try {
 
-            password = await bcrypt.hash(password, 10)
+            user.password = await bcrypt.hash(user.password, 10)
 
-            const user = await userRepository.create({
-                name,
-                phone,
-                email,
-                password,
-                type,
-                enterprise_id
-            })
+            const created = await userRepository.create(user)
 
-            user.password = undefined
-            return user
+            if (!created)
+                throw new Error('Não foi possível criar o usuário')
 
         } catch (error) {
             console.error(error)

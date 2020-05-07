@@ -17,13 +17,23 @@ module.exports = {
                 phone: 'required|string|numeric|min:10|max:11',
                 password: 'required|string|min:6',
                 type: 'required|string|in:Administrator,Manager,Employee',
-                enterprise_id: 'required_when:type,Employee|integer|above:0',
+                enterprise_id: 'required_when:type,Employee|integer|'
+                    + 'above:0|only_accept:type,Employee',
                 email: 'required|email|unique:User'
             }, errorMessages)
 
-            const user = await userService.create(req.body)
+            const user = {
+                name: req.body.name,
+                phone: req.body.phone,
+                password: req.body.password,
+                type: req.body.type,
+                enterprise_id: req.body.enterprise_id,
+                email: req.body.email
+            }
 
-            return res.status(201).json(user)
+            await userService.create(user)
+
+            return res.status(204).send()
 
         } catch (error) {
             console.error(error)

@@ -1,12 +1,12 @@
 const userRepository = require('../../repositories/UserRepository')
-const ApplicationError = require('../../utils/errorHandler')
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt')
 const { secret } = require('../../../config/auth');
+const ApplicationError = require('../../utils/errorHandler')
 
 module.exports = {
 
-    login: async ({ email, password }) => {
+    login: async (email, password) => {
 
         try {
 
@@ -24,9 +24,16 @@ module.exports = {
                 expiresIn: 86400
             })
 
-            user.password = undefined
+            const response = {
+                id: user.id,
+                name: user.name,
+                phone: user.phone,
+                email: user.email,
+                type: user.type,
+                token
+            }
 
-            return { ...user.toJSON(), token }
+            return response
 
         } catch (error) {
             console.error(error)
