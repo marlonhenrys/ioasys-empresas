@@ -1,6 +1,7 @@
 const userService = require('../services/user/create')
 const validator = require('indicative/validator')
 const { user: errorMessages } = require('../utils/errorMessages')
+const checkPermission = require('../services/user/checkPermission')
 
 module.exports = {
 
@@ -30,6 +31,8 @@ module.exports = {
                 enterprise_id: req.body.enterprise_id,
                 email: req.body.email
             }
+
+            await checkPermission.create(user, req.auth)
 
             await userService.create(user)
 
