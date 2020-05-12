@@ -4,27 +4,24 @@ const { user: errorMessages } = require('../utils/errorMessages')
 
 module.exports = {
 
-    login: async (req, res) => {
+  login: async (req, res) => {
+    try {
+      await validator.validate(req.body, {
+        email: 'required|email',
+        password: 'required|string|min:6'
+      }, errorMessages)
 
-        try {
+      const { email, password } = req.body
 
-            await validator.validate(req.body, {
-                email: 'required|email',
-                password: 'required|string|min:6'
-            }, errorMessages)
+      const user = await authService.login(email, password)
 
-            const { email, password } = req.body
+      return res.status(200).json(user)
+    } catch (error) {
+      console.error(error)
 
-            const user = await authService.login(email, password)
-
-            return res.status(200).json(user)
-
-        } catch (error) {
-            console.error(error)
-
-            return res.status(error.status || 500).json({
-                message: error.message
-            })
-        }
+      return res.status(error.status || 500).json({
+        message: error.message
+      })
     }
+  }
 }
