@@ -45,27 +45,6 @@ validator.extend('unique', {
   }
 })
 
-validator.extend('onlyAccept', {
-  async: true,
-
-  compile (args) {
-    if (args.length !== 2) {
-      throw new Error('OnlyAccept rule needs the field name and value')
-    }
-
-    return args
-  },
-
-  async validate (data, field, args) {
-    const [attribute, value] = args
-
-    const attributeValue = data.original[attribute]
-    const fieldValue = data.original[field]
-
-    return !(attributeValue !== value && fieldValue)
-  }
-})
-
 validator.extend('numeric', {
   async: true,
 

@@ -9,8 +9,14 @@ module.exports = async (req, res, next) => {
     let permission = false
 
     switch (action) {
-      case 'POST /users':
-        permission = userType === ADM || userType === MGR
+      case 'POST /administrators':
+        permission = userType === ADM
+        break
+      case 'POST /managers':
+        permission = userType === ADM
+        break
+      case 'POST /employees':
+        permission = userType === MGR
         break
       default:
         permission = false

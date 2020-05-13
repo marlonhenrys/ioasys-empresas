@@ -1,7 +1,11 @@
 const AuthController = require('./AuthController')
-const UserController = require('./UserController')
+const AdminController = require('./AdminController')
+const ManagerController = require('./ManagerController')
+const EmployeeController = require('./EmployeeController')
 
 module.exports = {
   AuthController,
-  UserController
+  AdminController,
+  ManagerController,
+  EmployeeController
 }

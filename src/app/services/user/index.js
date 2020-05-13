@@ -1,7 +1,9 @@
-const checkPermission = require('./checkPermission')
 const create = require('./create')
+const findAllByType = require('./findAllByType')
+const findByIdAndType = require('./findByIdAndType')
 
 module.exports = {
-  checkPermission,
-  create
+  create,
+  findAllByType,
+  findByIdAndType
 }

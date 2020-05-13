@@ -3,13 +3,6 @@ const validator = require('indicative/validator')
 const { user: errorMessages } = require('../utils/errorMessages')
 
 module.exports = {
-  register: async (req, res) => {
-    try {
-
-    } catch (error) {
-
-    }
-  },
 
   authenticate: async (req, res) => {
     try {
@@ -20,7 +13,7 @@ module.exports = {
 
       const { email, password } = req.body
 
-      const user = await authService.login(email, password)
+      const user = await authService.authenticate(email, password)
 
       return res.status(200).json(user)
     } catch (error) {
