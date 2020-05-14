@@ -11,9 +11,8 @@ module.exports = {
 
   findAll: () => User.findAll(),
 
-  findAllByType: (type, enterprises) => User.findAll({
+  findAllEmployeesByEnterpriseId: enterprises => User.findAll({
     where: {
-      type,
       enterprise_id: {
         [Op.in]: [...enterprises]
       }

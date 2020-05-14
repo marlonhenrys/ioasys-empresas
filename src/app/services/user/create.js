@@ -1,10 +1,9 @@
 const userRepository = require('../../repositories/UserRepository')
 const bcrypt = require('bcrypt')
 
-module.exports.create = async user => {
+module.exports = async user => {
   try {
     user.password = await bcrypt.hash(user.password, 10)
-
     const created = await userRepository.create(user)
 
     if (!created) {

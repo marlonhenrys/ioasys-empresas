@@ -19,14 +19,20 @@ module.exports = async (req, res, next) => {
 
     const [scheme, token] = parts
 
-    if (!/^Bearer$/i.test(scheme)) { throw new ApplicationError('Token mal formatado', 401) }
+    if (!/^Bearer$/i.test(scheme)) {
+      throw new ApplicationError('Token mal formatado', 401)
+    }
 
-    jwt.verify(token, secret, async (error, decoded) => {
-      if (error) { throw new ApplicationError('Token inválido', 401) }
+    await jwt.verify(token, secret, async (error, decoded) => {
+      if (error) {
+        throw new ApplicationError('Token inválido', 401)
+      }
 
       const user = await userRepository.findById(decoded.user_id)
 
-      if (!user) { throw new ApplicationError('Não foi possível autenticar o usuário', 401) }
+      if (!user) {
+        throw new ApplicationError('Não foi possível autenticar o usuário', 401)
+      }
 
       req.auth = {
         id: user.id,

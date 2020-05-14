@@ -1,6 +1,6 @@
 const enterpriseRepository = require('../../repositories/EnterpriseRepository')
 
-module.exports.create = async enterprise => {
+module.exports = async enterprise => {
   try {
     const created = await enterpriseRepository.create(enterprise)
 

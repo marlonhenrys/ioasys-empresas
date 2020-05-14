@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt')
 const { secret } = require('../../../config/auth')
 const ApplicationError = require('../../utils/errorHandler')
 
-module.exports.login = async (email, password) => {
+module.exports = async (email, password) => {
   try {
     const user = await userRepository.findByEmail(email)
 

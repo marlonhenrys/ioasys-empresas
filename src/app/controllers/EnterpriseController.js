@@ -26,7 +26,7 @@ module.exports = {
         description: req.body.description
       }
 
-      //   await userService.checkPermission.create(user, req.auth)
+      await enterpriseService.validation.create(enterprise, req.auth)
 
       await enterpriseService.create(enterprise)
 

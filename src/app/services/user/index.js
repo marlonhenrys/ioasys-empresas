@@ -1,7 +1,7 @@
-const checkPermission = require('./checkPermission')
+const validation = require('./validation')
 const create = require('./create')
 
 module.exports = {
-  checkPermission,
+  validation,
   create
 }

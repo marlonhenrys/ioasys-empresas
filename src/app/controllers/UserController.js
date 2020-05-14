@@ -40,7 +40,7 @@ module.exports = {
         email: req.body.email
       }
 
-      await userService.checkPermission.create(user, req.auth)
+      await userService.validation.create(user, req.auth)
 
       await userService.create(user)
 

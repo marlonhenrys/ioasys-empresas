@@ -1,18 +1,20 @@
 const userRepository = require('../../repositories/UserRepository')
+const enterpriseRepository = require('../../repositories/EnterpriseRepository')
 const { ADM, MGR, EMP } = require('../../utils/typeUsers')
 
-module.exports.findAll = async (auth, type, enterpriseId) => {
+module.exports = async (auth, type, enterpriseId) => {
   try {
     let users
 
     if (auth.type === ADM) {
       users = await userRepository.findAll()
     } else if (auth.type === MGR) {
-    //   enterprises = await enterpriseRepository.findAllByManagerId(auth.id)
-    //   enterprises = enterprises.map(enterprise => enterprise.id)
-      users = await userRepository.findAllByType('Employee', [])
+      const enterprises = await enterpriseRepository.findAllByManagerId(auth.id)
+      const onlyId = enterprises.map(enterprise => enterprise.id)
+
+      users = await userRepository.findAllInEnterprises([...onlyId])
     } else if (auth.type === EMP) {
-      users = await userRepository.findAllByType('Employee', [])
+      users = await userRepository.findAllInEnterprises([])
     }
 
     if (!users) {
