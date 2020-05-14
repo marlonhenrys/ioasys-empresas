@@ -5,7 +5,18 @@ const { user: errorMessages } = require('../utils/errorMessages')
 module.exports = {
 
   index: async (req, res) => {
+    try {
+      const { type, enterpriseId } = req.params
+      const users = await userService.findAll(req.auth, type, enterpriseId)
 
+      return res.status(200).json(users)
+    } catch (error) {
+      console.error(error)
+
+      return res.status(error.status || 500).json({
+        message: error.message
+      })
+    }
   },
 
   create: async (req, res) => {

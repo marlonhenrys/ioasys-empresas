@@ -1,4 +1,5 @@
 const { User } = require('../models')
+const { Op } = require('sequelize')
 
 module.exports = {
 
@@ -6,6 +7,17 @@ module.exports = {
 
   findByEmail: email => User.findOne({ where: { email } }),
 
-  findById: id => User.findByPk(id)
+  findById: id => User.findByPk(id),
+
+  findAll: () => User.findAll(),
+
+  findAllByType: (type, enterprises) => User.findAll({
+    where: {
+      type,
+      enterprise_id: {
+        [Op.in]: [...enterprises]
+      }
+    }
+  })
 
 }

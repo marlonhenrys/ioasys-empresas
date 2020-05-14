@@ -12,6 +12,9 @@ module.exports = async (req, res, next) => {
       case 'POST /users':
         permission = userType === ADM || userType === MGR
         break
+      case 'POST /enterprises':
+        permission = userType === ADM || userType === MGR
+        break
       default:
         permission = false
         break

@@ -17,5 +17,8 @@ module.exports = {
     'email.required': 'O email é obrigatório',
     'email.email': 'Formato de email inválido',
     'email.unique': 'Este email já está cadastrado'
+  },
+  enterprise: {
+
   }
 }

@@ -3,15 +3,8 @@ const validator = require('indicative/validator')
 const { user: errorMessages } = require('../utils/errorMessages')
 
 module.exports = {
-  register: async (req, res) => {
-    try {
 
-    } catch (error) {
-
-    }
-  },
-
-  authenticate: async (req, res) => {
+  login: async (req, res) => {
     try {
       await validator.validate(req.body, {
         email: 'required|email',

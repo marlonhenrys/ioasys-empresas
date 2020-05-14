@@ -41,6 +41,11 @@ class User extends Model {
       sequelize
     })
   }
+
+  static associate (models) {
+    this.belongsTo(models.Enterprise, { foreignKey: 'enterprise_id', as: 'job' })
+    this.hasMany(models.Enterprise, { foreignKey: 'manager_id', as: 'enterprises' })
+  }
 }
 
 module.exports = User
