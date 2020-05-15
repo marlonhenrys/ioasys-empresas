@@ -1,7 +1,11 @@
-const checkPermission = require('./checkPermission')
+const validation = require('./validation')
 const create = require('./create')
+const findAll = require('./findAll')
+const findOne = require('./findOne')
 
 module.exports = {
-  checkPermission,
-  create
+  validation,
+  create,
+  findAll,
+  findOne
 }
