@@ -6,12 +6,17 @@ module.exports = {
 
   findById: id => Enterprise.findByPk(id),
 
-  findAllByManagerId: managerId => Enterprise.findAll({
-    where: { manager_id: managerId }
+  findAll: () => Enterprise.findAll({
+    attributes: {
+      exclude: ['createdAt', 'updatedAt']
+    }
   }),
 
-  findByIdAndManager: (id, managerId) => Enterprise.findOne({
-    where: { id, manager_id: managerId }
+  findAllByManagerId: managerId => Enterprise.findAll({
+    where: { manager_id: managerId },
+    attributes: {
+      exclude: ['createdAt', 'updatedAt']
+    }
   })
 
 }

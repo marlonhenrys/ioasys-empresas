@@ -14,10 +14,8 @@ module.exports = {
           break
         case MGR:
           if (user.type === EMP) {
-            const enterprise = await enterpriseRepository
-              .findByIdAndManager(user.enterprise_id, auth.id)
-
-            permission = !!enterprise
+            const enterprise = await enterpriseRepository.findById(user.enterprise_id)
+            permission = enterprise.manager_id === auth.id
           }
           break
         default:

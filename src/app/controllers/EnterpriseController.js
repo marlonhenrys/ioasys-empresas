@@ -5,7 +5,17 @@ const { enterprise: errorMessages } = require('../utils/errorMessages')
 module.exports = {
 
   index: async (req, res) => {
+    try {
+      const enterprises = await enterpriseService.findAll(req.auth)
 
+      return res.status(200).json(enterprises)
+    } catch (error) {
+      console.error(error)
+
+      return res.status(error.status || 500).json({
+        message: error.message
+      })
+    }
   },
 
   create: async (req, res) => {
@@ -27,7 +37,6 @@ module.exports = {
       }
 
       await enterpriseService.validation.create(enterprise, req.auth)
-
       await enterpriseService.create(enterprise)
 
       return res.status(204).send()
