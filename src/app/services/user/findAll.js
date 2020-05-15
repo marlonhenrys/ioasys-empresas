@@ -5,7 +5,7 @@ const { ADM, MGR, EMP } = require('../../utils/typeUsers')
 
 module.exports = async (auth, type, enterpriseId) => {
   try {
-    let users = null
+    let users
 
     switch (auth.type) {
       case ADM:

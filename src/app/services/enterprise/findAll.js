@@ -3,7 +3,7 @@ const { ADM, MGR } = require('../../utils/typeUsers')
 
 module.exports = async auth => {
   try {
-    let enterprises = null
+    let enterprises
 
     switch (auth.type) {
       case ADM:
