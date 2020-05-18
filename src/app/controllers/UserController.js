@@ -69,7 +69,31 @@ module.exports = {
   },
 
   update: async (req, res) => {
+    try {
+      await validator.validate(req.body, {
+        name: 'string|min:3',
+        phone: 'string|numeric|min:10|max:11',
+        email: 'email|unique:User'
+      }, errorMessages)
 
+      const data = {
+        id: req.params.id,
+        name: req.body.name,
+        phone: req.body.phone,
+        email: req.body.email
+      }
+
+      await userService.validation.update(data, req.auth)
+      await userService.update(data)
+
+      return res.status(204).send()
+    } catch (error) {
+      console.error(error)
+
+      return res.status(error.status || 500).json({
+        message: error.message
+      })
+    }
   },
 
   destroy: async (req, res) => {

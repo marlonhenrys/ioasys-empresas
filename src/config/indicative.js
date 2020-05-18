@@ -31,6 +31,8 @@ validator.extend('unique', {
     const fieldValue = data.original[field]
     const [modelName] = args
 
+    if (!fieldValue) { return true }
+
     if (modelName) {
       const Model = require(`../app/models/${modelName}`)
       const row = await Model.findOne({
@@ -38,7 +40,7 @@ validator.extend('unique', {
           [field]: fieldValue
         }
       })
-      if (!row) return true
+      if (!row) { return true }
     }
 
     return false
@@ -75,6 +77,9 @@ validator.extend('numeric', {
 
   async validate (data, field) {
     const fieldValue = data.original[field]
+
+    if (!fieldValue) { return true }
+
     const reg = new RegExp('^\\d+$')
 
     return reg.test(fieldValue)
