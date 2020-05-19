@@ -16,6 +16,8 @@ module.exports = async (email, password) => {
 
     if (!validPassword) {
       throw new ApplicationError('Senha incorreta', 401)
+    } else if (user.status === 'Disabled') {
+      throw new ApplicationError('Este usuário está desabilitado', 403)
     }
 
     const token = jwt.sign({ user_id: user.id }, secret, {

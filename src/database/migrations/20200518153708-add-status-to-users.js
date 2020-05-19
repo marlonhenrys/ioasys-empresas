@@ -4,11 +4,14 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.addColumn(
       'users',
-      'disabled',
+      'status',
       {
-        type: Sequelize.BOOLEAN,
+        type: Sequelize.ENUM([
+          'Active',
+          'Disabled'
+        ]),
         allowNull: false,
-        defaultValue: false
+        defaultValue: 'Active'
       }
     )
   },
@@ -16,7 +19,7 @@ module.exports = {
   down: (queryInterface, Sequelize) => {
     return queryInterface.removeColumn(
       'users',
-      'disabled'
+      'status'
     )
   }
 }

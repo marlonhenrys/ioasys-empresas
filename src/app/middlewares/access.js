@@ -28,6 +28,9 @@ module.exports = async (req, res, next) => {
       case `PUT /users/${id}`:
         permission = true
         break
+      case 'PATCH /users':
+        permission = userType === ADM
+        break
       case `DELETE /users/${id}`:
         permission = userType === ADM || userType === MGR
         break

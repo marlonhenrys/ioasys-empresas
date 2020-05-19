@@ -32,6 +32,8 @@ module.exports = async (req, res, next) => {
 
       if (!user) {
         throw new ApplicationError('Não foi possível autenticar o usuário', 401)
+      } else if (user.status === 'Disabled') {
+        throw new ApplicationError('Este usuário está desabilitado', 403)
       }
 
       req.auth = {
