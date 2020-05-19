@@ -36,6 +36,10 @@ class User extends Model {
       type: {
         type: DataTypes.ENUM('Administrator', 'Manager', 'Employee'),
         allowNull: false
+      },
+      status: {
+        type: DataTypes.ENUM('Active', 'Disabled'),
+        allowNull: false
       }
     }, {
       sequelize

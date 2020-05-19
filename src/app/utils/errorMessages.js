@@ -16,7 +16,11 @@ module.exports = {
     'enterprise_id.only_accept': 'ID de empresa é aceito apenas para funcionários',
     'email.required': 'O email é obrigatório',
     'email.email': 'Formato de email inválido',
-    'email.unique': 'Este email já está cadastrado'
+    'email.unique': 'Este email já está cadastrado',
+    'users.required': 'A lista de usuários é obrigatória',
+    'users.array': 'É esperado um vetor com ID de usuários',
+    'status.required': 'O status é obrigatório',
+    'status.in': 'Status inválido'
   },
   enterprise: {
     'name.required': 'O nome é obrigatório',

@@ -27,7 +27,7 @@ module.exports = {
         password: 'required|string|min:6',
         type: 'required|string|in:Administrator,Manager,Employee',
         enterprise_id: 'required_when:type,Employee|integer|' +
-                    'above:0|only_accept:type,Employee',
+          'above:0|only_accept:type,Employee',
         email: 'required|email|unique:User'
       }, errorMessages)
 
@@ -85,6 +85,27 @@ module.exports = {
 
       await userService.validation.update(data, req.auth)
       await userService.update(data)
+
+      return res.status(204).send()
+    } catch (error) {
+      console.error(error)
+
+      return res.status(error.status || 500).json({
+        message: error.message
+      })
+    }
+  },
+
+  setStatus: async (req, res) => {
+    try {
+      await validator.validate(req.body, {
+        users: 'required|array',
+        status: 'required|string|in:Active,Disabled'
+      }, errorMessages)
+
+      const { users, status } = req.body
+
+      await userService.setStatus(users, status)
 
       return res.status(204).send()
     } catch (error) {
