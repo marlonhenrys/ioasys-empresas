@@ -2,17 +2,14 @@ const userRepository = require('../../repositories/UserRepository')
 
 module.exports = async (users, status) => {
   try {
-    const userList = await Promise.all(users.forEach(async id => {
+    for (const id of users) {
       const user = await userRepository.findById(id)
 
-      if (user) { return user }
-    }))
-
-    await Promise.all(userList.forEach(async user => {
-      user.status = status
-      console.log(user)
-      await user.save()
-    }))
+      if (user) {
+        user.status = status
+        await user.save()
+      }
+    }
   } catch (error) {
     console.error(error)
     throw error
