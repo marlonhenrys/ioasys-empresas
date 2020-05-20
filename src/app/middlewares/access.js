@@ -37,6 +37,9 @@ module.exports = async (req, res, next) => {
       case `GET /enterprises/${id}`:
         permission = true
         break
+      case `DELETE /enterprises/${id}`:
+        permission = userType === ADM || userType === MGR
+        break
       default:
         permission = false
         break
