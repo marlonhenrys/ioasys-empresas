@@ -13,14 +13,8 @@ module.exports = async (req, res, next) => {
       case 'POST /users':
         permission = userType === ADM || userType === MGR
         break
-      case 'POST /enterprises':
-        permission = userType === ADM || userType === MGR
-        break
       case 'GET /users':
         permission = true
-        break
-      case 'GET /enterprises':
-        permission = userType === ADM || userType === MGR
         break
       case `GET /users/${id}`:
         permission = true
@@ -33,6 +27,15 @@ module.exports = async (req, res, next) => {
         break
       case `DELETE /users/${id}`:
         permission = userType === ADM || userType === MGR
+        break
+      case 'POST /enterprises':
+        permission = userType === ADM || userType === MGR
+        break
+      case 'GET /enterprises':
+        permission = true
+        break
+      case `GET /enterprises/${id}`:
+        permission = true
         break
       default:
         permission = false

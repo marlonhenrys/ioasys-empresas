@@ -39,7 +39,7 @@ class User extends Model {
       },
       status: {
         type: DataTypes.ENUM('Active', 'Disabled'),
-        allowNull: false
+        allowNull: true
       }
     }, {
       sequelize
