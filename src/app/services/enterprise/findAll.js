@@ -1,5 +1,7 @@
+/* eslint-disable no-case-declarations */
 const enterpriseRepository = require('../../repositories/EnterpriseRepository')
-const { ADM, MGR } = require('../../utils/typeUsers')
+const userRepository = require('../../repositories/UserRepository')
+const { ADM, MGR, EMP } = require('../../utils/typeUsers')
 
 module.exports = async auth => {
   try {
@@ -11,6 +13,10 @@ module.exports = async auth => {
         break
       case MGR:
         enterprises = await enterpriseRepository.findAllByManagerId(auth.id)
+        break
+      case EMP:
+        const employee = await userRepository.findByIdWithEnterprise(auth.id)
+        enterprises = employee.job
         break
       default:
         enterprises = null
